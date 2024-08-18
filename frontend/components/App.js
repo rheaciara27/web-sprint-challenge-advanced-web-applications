@@ -6,17 +6,13 @@ import Message from './Message'
 import ArticleForm from './ArticleForm'
 import Spinner from './Spinner'
 import axios from 'axios'
+import { axiosWithAuth } from '../axios'
 
 const articlesUrl = 'http://localhost:9000/api/articles'
 const loginUrl = 'http://localhost:9000/api/login'
 
 const initialArticleId = null;
 const initialFormValues2 = { title: '', text: '', topic: '' }
-
-export const axiosWithAuth = () => {
-    const token = JSON.parse(window.localStorage.getItem('token'))
-    return axios.create({headers: {authorization : token}})
-}
 
 export default function App() {
   // ✨ MVP can be achieved with these states
