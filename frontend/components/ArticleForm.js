@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import PT from 'prop-types'
-import { axiosWithAuth } from '../axios';
 
 const initialFormValues = { title: '', text: '', topic: '' }
 
