@@ -1,16 +1,22 @@
-import React, { useDebugValue, useState } from 'react'
+import React, { useState } from 'react'
 import { NavLink, Routes, Route, useNavigate } from 'react-router-dom'
 import Articles from './Articles'
 import LoginForm from './LoginForm'
 import Message from './Message'
 import ArticleForm from './ArticleForm'
 import Spinner from './Spinner'
+import axios from 'axios'
 
 const articlesUrl = 'http://localhost:9000/api/articles'
 const loginUrl = 'http://localhost:9000/api/login'
 
 const initialArticleId = null;
 const initialFormValues2 = { title: '', text: '', topic: '' }
+
+export const axiosWithAuth = () => {
+  const token = JSON.parse(window.localStorage.getItem('token'))
+  return axios.create({headers: {authorization : token}})
+}
 
 export default function App() {
   // ✨ MVP can be achieved with these states
@@ -19,6 +25,7 @@ export default function App() {
   const [currentArticleId, setCurrentArticleId] = useState()
   const [spinnerOn, setSpinnerOn] = useState(false)
   const [secondValues,setSecondValues]=useState(initialFormValues2)
+  
 
   // ✨ Research `useNavigate` in React Router v.6
   const navigate = useNavigate()
@@ -45,7 +52,7 @@ export default function App() {
     // to the Articles screen. Don't forget to turn off the spinner!
     setMessage("");
     setSpinnerOn(true)
-    const credentials = {userName : username.trim(), password : password.trim()}
+    const credentials = {username : username.trim(), password : password.trim()}
     axios.post("http://localhost:9000/api/login",credentials).then(res=> {
       window.localStorage.setItem("token",JSON.stringify(res.data.token))
       setMessage(res.data.message);
